@@ -4,7 +4,7 @@
 
 - Auf GitHub: **Settings** → **General** → **Danger Zone** → **Change repository visibility** → **Make public**.
 
-Damit ist der Quellcode und die **Actions**-Seite für alle erreichbar. Nutzer können dann unter **Actions** die neueste erfolgreiche Run wählen und die **Artifacts** (Windows EXE/MSI/NSIS, Linux standalone/deb/AppImage) herunterladen – siehe README „Option A“.
+Damit ist der Quellcode und die **Actions**-Seite für alle erreichbar. Nutzer können unter **Actions** die neueste erfolgreiche Ausführung wählen und die **Artifacts** herunterladen – siehe README **Quick start / Installation → CI artifacts**.
 
 ---
 
@@ -39,18 +39,33 @@ git push origin v1.0.0
 6. Im Release-Formular bei **Attach binaries** die entpackten Dateien (z.B. `.exe`, `.msi`, `.deb`, `.AppImage`) hochladen.
 7. **Publish release** klicken.
 
-**Automatisch (optional):**  
-Ein eigener Workflow kann bei Push eines Tags (z.B. `v*`) laufen, die CI-Artefakte sammeln und ein GitHub Release mit angehängten Binaries erstellen. Dafür braucht der Workflow ein Token mit `contents: write` (z.B. `GITHUB_TOKEN` reicht für das eigene Repo).
+**Automatisch (dieses Repository):**  
+Der Workflow [`.github/workflows/build.yml`](../.github/workflows/build.yml) baut bei Push auf `main`/`master` und bei Tags `v*`. Für Tags erzeugt der Job **release** mit `softprops/action-gh-release` ein GitHub Release und hängt die fertigen Windows- und Linux-Artefakte an (EXE, MSI, NSIS, Linux-Binary, AppImage, `.deb`). GitHub ergänzt automatisch die Quellcode-Zips (`Source code`).
+
+---
+
+## 4. Abgleich mit der GitHub-Projektseiten-PRD (`prd_github_project.md`)
+
+Die Projekt-Doku im Repo-Wurzelverzeichnis (`README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, Ordner `screenshots/`) ist auf diese Empfehlungen ausgerichtet. Optional auf GitHub selbst noch ergänzen:
+
+| Empfehlung | Hinweis |
+|------------|---------|
+| **Social Preview** (1200×630 px) | Unter *Settings* → *General* → *Social preview* hochladen. |
+| **Repository-Logo / Avatar** | Organisations- oder Repo-Branding in GitHub UI. |
+| **Topics** | Z. B. `tauri`, `rust`, `typescript`, `desktop`, `exif`, `batch-rename`, `photos`, `media`, `linux`, `windows`. |
+| **`SHA256SUMS.txt`** | Aktuell nicht durch CI erzeugt; bei Bedarf nach Build manuell oder per Script aus den Release-Dateien erzeugen und am Release anhängen. |
+| **`updater.json`** | Nur relevant, wenn der [Tauri Updater](https://v2.tauri.app/plugin/updater/) aktiv genutzt wird; dann separat bereitstellen/hosten. |
 
 ---
 
 ## Kurz-Checkliste
 
 - [ ] Repo auf **public** gestellt (wenn gewünscht).
-- [ ] Version in `package.json`, `Cargo.toml`, `tauri.conf.json` angepasst.
+- [ ] Version per `npm run version:patch|minor|major` angepasst (`package.json`, `Cargo.toml`, `tauri.conf.json`, `package-lock.json`).
+- [ ] `CHANGELOG.md` für die Version ergänzt.
 - [ ] Änderungen committet und nach `main`/`master` gepusht.
-- [ ] Build in **Actions** erfolgreich durchgelaufen.
 - [ ] Tag gesetzt und gepusht: `git tag vX.Y.Z && git push origin vX.Y.Z`.
-- [ ] **Release** auf GitHub erstellt und Binaries aus den letzten Artifacts angehängt.
+- [ ] Workflow **Build** auf dem Tag erfolgreich; Release mit Binaries ist automatisch angelegt (siehe **Releases**).
+- [ ] Optional: Screenshots unter `screenshots/` ergänzen und im README verlinken.
 
 Danach ist das Programm „veröffentlicht“: Quellcode und Builds sind einsehbar, Nutzer können über **Releases** oder **Actions** → Artifacts die fertigen Dateien herunterladen.

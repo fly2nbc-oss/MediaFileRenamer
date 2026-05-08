@@ -2,7 +2,7 @@
   "name": "media-file-renamer",
   "private": true,
   "license": "Apache-2.0",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "tauri:build": "NO_STRIP=1 tauri build",
+    "version:major": "node scripts/version-bump.mjs major",
+    "version:minor": "node scripts/version-bump.mjs minor",
     "version:patch": "node scripts/version-bump.mjs patch",
     "version:auto": "node scripts/version-bump.mjs auto"
   },
