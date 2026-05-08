@@ -1,6 +1,6 @@
 [package]
 name = "media-file-renamer"
-version = "1.0.5"
+version = "1.0.6"
 license = "Apache-2.0"
 description = "Media File Renamer - Batch rename photos and videos using EXIF dates"
 authors = ["you"]
