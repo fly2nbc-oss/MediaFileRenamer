@@ -36,13 +36,11 @@
 
 ## Screenshots
 
-Add high-quality screenshots (light and dark UI, Linux and Windows) under [`./screenshots/`](./screenshots/) and link them here. Example:
+### Linux (demo)
 
-```markdown
-![Main window](./screenshots/main-linux-dark.png)
-```
+![Media File Renamer on Linux — main window](./screenshots/demo-linux.png)
 
-Until those assets exist, use the built app locally (`npm run tauri dev`) to capture images.
+Add more captures (Windows, dark mode) under [`./screenshots/`](./screenshots/) and link them here.
 
 ---
 
