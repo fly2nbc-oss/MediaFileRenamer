@@ -4,7 +4,7 @@ Thank you for helping improve **Media File Renamer**.
 
 ## Getting started
 
-1. Fork the repository and create a branch from `main` (or `master`).
+1. Fork the repository and create a branch from `main`.
 2. Install prerequisites listed in the **Development & Build** section of [`README.md`](./README.md).
 3. Run `npm install` and `npm run tauri dev` for local development.
 

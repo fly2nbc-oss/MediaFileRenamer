@@ -35,12 +35,12 @@ git push origin v1.0.0
 2. **Choose a tag:** den gerade gepushten Tag wählen (z.B. `v1.0.0`).
 3. **Release title:** z.B. `v1.0.0` oder „Media File Renamer 1.0.0“.
 4. **Describe:** Kurzbeschreibung oder Changelog (z.B. aus `CHANGELOG.md`).
-5. Nach dem nächsten erfolgreichen **Build** (auf `main`/`master`): Bei der letzten Run unter **Actions** die **Artifacts** herunterladen.
+5. Nach dem nächsten erfolgreichen **Build** (auf `main`): Bei der letzten Run unter **Actions** die **Artifacts** herunterladen.
 6. Im Release-Formular bei **Attach binaries** die entpackten Dateien (z.B. `.exe`, `.msi`, `.deb`, `.AppImage`) hochladen.
 7. **Publish release** klicken.
 
 **Automatisch (dieses Repository):**  
-Der Workflow [`.github/workflows/build.yml`](../.github/workflows/build.yml) baut bei Push auf `main`/`master` und bei Tags `v*`. Für Tags erzeugt der Job **release** mit `softprops/action-gh-release` ein GitHub Release und hängt die fertigen Windows- und Linux-Artefakte an (EXE, MSI, NSIS, Linux-Binary, AppImage, `.deb`). GitHub ergänzt automatisch die Quellcode-Zips (`Source code`).
+Der Workflow [`.github/workflows/build.yml`](../.github/workflows/build.yml) baut bei Push auf `main` und bei Tags `v*`. Für Tags erzeugt der Job **release** mit `softprops/action-gh-release` ein GitHub Release und hängt die fertigen Windows- und Linux-Artefakte an (EXE, MSI, NSIS, Linux-Binary, AppImage, `.deb`). GitHub ergänzt automatisch die Quellcode-Zips (`Source code`).
 
 ---
 
@@ -63,7 +63,7 @@ Die Projekt-Doku im Repo-Wurzelverzeichnis (`README.md`, `CHANGELOG.md`, `CONTRI
 - [ ] Repo auf **public** gestellt (wenn gewünscht).
 - [ ] Version per `npm run version:patch|minor|major` angepasst (`package.json`, `Cargo.toml`, `tauri.conf.json`, `package-lock.json`).
 - [ ] `CHANGELOG.md` für die Version ergänzt.
-- [ ] Änderungen committet und nach `main`/`master` gepusht.
+- [ ] Änderungen committet und nach `main` gepusht.
 - [ ] Tag gesetzt und gepusht: `git tag vX.Y.Z && git push origin vX.Y.Z`.
 - [ ] Workflow **Build** auf dem Tag erfolgreich; Release mit Binaries ist automatisch angelegt (siehe **Releases**).
 - [ ] Optional: Screenshots unter `screenshots/` ergänzen und im README verlinken.

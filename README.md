@@ -10,10 +10,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/fly2nbc-oss/media-file-renamer/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License Apache-2.0"></a>
+  <a href="https://github.com/fly2nbc-oss/media-file-renamer/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License Apache-2.0"></a>
   <a href="https://github.com/fly2nbc-oss/media-file-renamer/releases/latest"><img src="https://img.shields.io/github/v/release/fly2nbc-oss/media-file-renamer?sort=semver" alt="Latest release"></a>
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20windows-lightgrey.svg" alt="Platforms Linux and Windows">
-  <a href="https://github.com/fly2nbc-oss/media-file-renamer/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/fly2nbc-oss/media-file-renamer/build.yml?branch=master" alt="Build status"></a>
+  <a href="https://github.com/fly2nbc-oss/media-file-renamer/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/fly2nbc-oss/media-file-renamer/build.yml?branch=main" alt="Build status"></a>
 </p>
 
 ---
@@ -66,7 +66,7 @@ Add more captures (Windows, dark mode) under [`./screenshots/`](./screenshots/) 
 
 ### Releases (recommended)
 
-**Stable binaries:** see [**Releases**](https://github.com/fly2nbc-oss/media-file-renamer/releases/latest). Pushing a tag `v*` on `master` triggers CI and uploads Windows (EXE, MSI, NSIS) and Linux (standalone, `.deb`, `.AppImage`) assets to that GitHub Release.
+**Stable binaries:** see [**Releases**](https://github.com/fly2nbc-oss/media-file-renamer/releases/latest). Pushing a tag `v*` on `main` triggers CI and uploads Windows (EXE, MSI, NSIS) and Linux (standalone, `.deb`, `.AppImage`) assets to that GitHub Release.
 
 Details: [`docs/RELEASE.md`](./docs/RELEASE.md).
 
