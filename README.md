@@ -10,10 +10,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/fly2nbc-oss/media-file-renamer/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License Apache-2.0"></a>
-  <a href="https://github.com/fly2nbc-oss/media-file-renamer/releases/latest"><img src="https://img.shields.io/github/v/release/fly2nbc-oss/media-file-renamer?sort=semver" alt="Latest release"></a>
+  <a href="https://github.com/fly2nbc-oss/MediaFileRenamer/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License Apache-2.0"></a>
+  <a href="https://github.com/fly2nbc-oss/MediaFileRenamer/releases/latest"><img src="https://img.shields.io/github/v/release/fly2nbc-oss/MediaFileRenamer?sort=semver" alt="Latest release"></a>
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20windows-lightgrey.svg" alt="Platforms Linux and Windows">
-  <a href="https://github.com/fly2nbc-oss/media-file-renamer/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/fly2nbc-oss/media-file-renamer/build.yml?branch=main" alt="Build status"></a>
+  <a href="https://github.com/fly2nbc-oss/MediaFileRenamer/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/fly2nbc-oss/MediaFileRenamer/build.yml?branch=main" alt="Build status"></a>
 </p>
 
 ---
@@ -66,13 +66,13 @@ Add more captures (Windows, dark mode) under [`./screenshots/`](./screenshots/) 
 
 ### Releases (recommended)
 
-**Stable binaries:** see [**Releases**](https://github.com/fly2nbc-oss/media-file-renamer/releases/latest). Pushing a tag `v*` on `main` triggers CI and uploads Windows (EXE, MSI, NSIS) and Linux (standalone, `.deb`, `.AppImage`) assets to that GitHub Release.
+**Stable binaries:** see [**Releases**](https://github.com/fly2nbc-oss/MediaFileRenamer/releases/latest). Pushing a tag `v*` on `main` triggers CI and uploads Windows (EXE, MSI, NSIS) and Linux (standalone, `.deb`, `.AppImage`) assets to that GitHub Release.
 
 Details: [`docs/RELEASE.md`](./docs/RELEASE.md).
 
 ### CI artifacts (latest successful build)
 
-1. Open [**Actions**](https://github.com/fly2nbc-oss/media-file-renamer/actions).
+1. Open [**Actions**](https://github.com/fly2nbc-oss/MediaFileRenamer/actions).
 2. Pick the latest successful workflow run.
 3. Download the artifact you need:
 
@@ -121,8 +121,8 @@ sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libappindicator3-dev 
 **Build**
 
 ```bash
-git clone https://github.com/fly2nbc-oss/media-file-renamer.git
-cd media-file-renamer
+git clone https://github.com/fly2nbc-oss/MediaFileRenamer.git
+cd MediaFileRenamer
 npm install
 npm run tauri:build
 ```
@@ -194,7 +194,7 @@ npx tauri icon MediaFileRenamerLogo.png
 ## Project structure
 
 ```
-media-file-renamer/
+MediaFileRenamer/
 ├── src/                    # Frontend (Vanilla TypeScript)
 │   ├── main.ts             # App init, events, UI, Tauri invoke
 │   ├── types.ts            # Shared TypeScript types
@@ -252,7 +252,7 @@ For the full policy and release mapping, see [`docs/versioning.md`](./docs/versi
 
 ## Roadmap, issues & contributing
 
-- **Issues & ideas:** use [GitHub Issues](https://github.com/fly2nbc-oss/media-file-renamer/issues).
+- **Issues & ideas:** use [GitHub Issues](https://github.com/fly2nbc-oss/MediaFileRenamer/issues).
 - **Contributing:** see [`CONTRIBUTING.md`](./CONTRIBUTING.md) and [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
 - **Suggested GitHub repository topics:** `tauri`, `rust`, `typescript`, `desktop`, `exif`, `batch-rename`, `photos`, `video`, `media`, `linux`, `windows`.
 

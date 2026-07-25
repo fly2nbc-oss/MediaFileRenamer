@@ -8,7 +8,7 @@ All notable changes to this project are documented in this file. The format foll
 
 - Tauri bundle identifier set to `com.fly2nbc.media-file-renamer` (aligned with publisher namespace).
 
-[1.0.6]: https://github.com/fly2nbc-oss/media-file-renamer/compare/v1.0.5...v1.0.6
+[1.0.6]: https://github.com/fly2nbc-oss/MediaFileRenamer/compare/v1.0.5...v1.0.6
 
 ## [1.0.5] - 2026-05-08
 
@@ -22,4 +22,4 @@ All notable changes to this project are documented in this file. The format foll
 - `CHANGELOG.md`, `CONTRIBUTING.md`, and `CODE_OF_CONDUCT.md` at repository root.
 - Web favicon for the Vite frontend (`public/favicon.png`).
 
-[1.0.5]: https://github.com/fly2nbc-oss/media-file-renamer/compare/v1.0.4...v1.0.5
+[1.0.5]: https://github.com/fly2nbc-oss/MediaFileRenamer/compare/v1.0.4...v1.0.5
