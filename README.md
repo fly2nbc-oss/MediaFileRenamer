@@ -1,7 +1,7 @@
 # Media File Renamer
 
 <p align="center">
-  <img src="./Media File Renamer Logo.png" alt="Media File Renamer icon" width="128" height="128">
+  <img src="./MediaFileRenamerLogo.png" alt="Media File Renamer icon" width="128" height="128">
 </p>
 
 <p align="center">
@@ -183,10 +183,10 @@ npm run tauri dev
 
 Runs the app with hot-reload (Vite on port 1420). Edit `src/*` and `src-tauri/src/*` as needed.
 
-**App icons:** the canonical raster logo is [`Media File Renamer Logo.png`](./Media File Renamer Logo.png) (square PNG). Regenerate platform icons with:
+**App icons:** the canonical raster logo is [`MediaFileRenamerLogo.png`](./MediaFileRenamerLogo.png) (square PNG). Regenerate platform icons with:
 
 ```bash
-npx tauri icon "Media File Renamer Logo.png"
+npx tauri icon MediaFileRenamerLogo.png
 ```
 
 ---
