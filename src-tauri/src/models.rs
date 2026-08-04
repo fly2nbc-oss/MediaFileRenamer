@@ -81,6 +81,15 @@ pub struct ToolsStatus {
     pub heif_convert: bool,
 }
 
+/// Maximum number of files accepted by a single scan request.
+pub const MAX_SCAN_FILES: usize = 10_000;
+
+/// JPEG quality (0-100) for HEIC-to-JPG conversion.
+pub const HEIC_JPEG_QUALITY: u8 = 90;
+
+/// Maximum numeric suffix tried before a conflicting rename is rejected.
+pub const MAX_COLLISION_SUFFIX: u32 = 999;
+
 pub const IMAGE_EXTENSIONS: &[&str] = &[
     "jpg", "jpeg", "png", "heic", "heif", "tiff", "tif", "webp", "gif", "bmp",
 ];

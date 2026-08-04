@@ -9,10 +9,7 @@ pub fn create_backup(entries: &[FileEntry]) -> Result<HashMap<String, String>, S
     let mut dirs: HashMap<PathBuf, Vec<&FileEntry>> = HashMap::new();
     for entry in entries {
         let path = Path::new(&entry.path);
-        let parent = path
-            .parent()
-            .unwrap_or(Path::new("."))
-            .to_path_buf();
+        let parent = path.parent().unwrap_or(Path::new(".")).to_path_buf();
         dirs.entry(parent).or_default().push(entry);
     }
 
@@ -25,15 +22,47 @@ pub fn create_backup(entries: &[FileEntry]) -> Result<HashMap<String, String>, S
 
         for file_entry in files {
             let src = Path::new(&file_entry.path);
-            let dst = backup_dir.join(&file_entry.filename);
+            let safe_name = src
+                .file_name()
+                .ok_or_else(|| format!("Failed to resolve filename for {}", file_entry.path))?;
+            let dst = backup_dir.join(safe_name);
             std::fs::copy(src, &dst)
                 .map_err(|e| format!("Failed to backup {}: {}", file_entry.filename, e))?;
-            backup_map.insert(
-                file_entry.path.clone(),
-                dst.to_string_lossy().to_string(),
-            );
+            backup_map.insert(file_entry.path.clone(), dst.to_string_lossy().to_string());
         }
     }
 
     Ok(backup_map)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::ffi::OsStr;
+
+    use crate::models::DateSource;
+    use tempfile::TempDir;
+
+    #[test]
+    fn backup_uses_the_source_basename() {
+        let tmp = TempDir::new().unwrap();
+        let source = tmp.path().join("photo.jpg");
+        std::fs::write(&source, b"photo").unwrap();
+
+        let entry = FileEntry {
+            path: source.to_string_lossy().to_string(),
+            filename: "../escaped.jpg".to_string(),
+            extension: "jpg".to_string(),
+            date_source: DateSource::FileSystem,
+            datetime: None,
+            is_heic: false,
+        };
+
+        let backups = create_backup(std::slice::from_ref(&entry)).unwrap();
+        let backup = PathBuf::from(backups.get(&entry.path).unwrap());
+
+        assert_eq!(backup.file_name(), Some(OsStr::new("photo.jpg")));
+        assert_eq!(backup.parent().and_then(Path::parent), Some(tmp.path()));
+        assert!(!tmp.path().join("escaped.jpg").exists());
+    }
 }

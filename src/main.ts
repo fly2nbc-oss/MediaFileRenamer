@@ -225,8 +225,7 @@ function closeAboutDialog() {
 async function handleRename() {
   const filesToRename: FileEntry[] = [];
   for (let i = 0; i < state.files.length; i++) {
-    const preview = state.previews[i];
-    if (preview && preview.new_name !== state.files[i].filename) {
+    if (fileNeedsProcessing(i)) {
       filesToRename.push(state.files[i]);
     }
   }
@@ -396,12 +395,19 @@ function updateView() {
 function countFilesToRename(): number {
   let count = 0;
   for (let i = 0; i < state.files.length; i++) {
-    const preview = state.previews[i];
-    if (preview && preview.new_name !== state.files[i].filename) {
+    if (fileNeedsProcessing(i)) {
       count++;
     }
   }
   return count;
+}
+
+function fileNeedsProcessing(index: number): boolean {
+  const preview = state.previews[index];
+  return Boolean(
+    preview &&
+      (preview.new_name !== state.files[index].filename || state.offsetSeconds !== 0)
+  );
 }
 
 function updateRenameButton() {

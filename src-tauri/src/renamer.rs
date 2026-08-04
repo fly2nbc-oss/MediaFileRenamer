@@ -105,3 +105,52 @@ fn format_stem(datetime: &NaiveDateTime, original_name: &str, format: &RenameFor
 pub fn apply_offset(datetime: &NaiveDateTime, offset_seconds: i64) -> NaiveDateTime {
     *datetime + chrono::Duration::seconds(offset_seconds)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn sample_datetime() -> NaiveDateTime {
+        NaiveDateTime::parse_from_str("2024-03-15 14:30:52", "%Y-%m-%d %H:%M:%S").unwrap()
+    }
+
+    #[test]
+    fn formats_all_supported_filename_variants() {
+        let datetime = sample_datetime();
+
+        assert_eq!(
+            format_stem(&datetime, "IMG_1234.jpg", &RenameFormat::Format1),
+            "2024_03_15__143052"
+        );
+        assert_eq!(
+            format_stem(&datetime, "IMG_1234.jpg", &RenameFormat::Format2),
+            "240315_143052"
+        );
+        assert_eq!(
+            format_stem(&datetime, "IMG_1234.jpg", &RenameFormat::Format3),
+            "240315_IMG_1234"
+        );
+        assert_eq!(
+            format_stem(&datetime, "IMG_1234.jpg", &RenameFormat::NoRename),
+            "IMG_1234"
+        );
+    }
+
+    #[test]
+    fn applies_positive_and_negative_offsets() {
+        let datetime = sample_datetime();
+
+        assert_eq!(
+            apply_offset(&datetime, 3600)
+                .format("%Y-%m-%d %H:%M:%S")
+                .to_string(),
+            "2024-03-15 15:30:52"
+        );
+        assert_eq!(
+            apply_offset(&datetime, -7200)
+                .format("%Y-%m-%d %H:%M:%S")
+                .to_string(),
+            "2024-03-15 12:30:52"
+        );
+    }
+}
