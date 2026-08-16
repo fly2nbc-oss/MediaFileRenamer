@@ -119,7 +119,7 @@ Copy-Item $e "$env:TEMP\mfr.bak" -Force
 Remove-Item $e -Force; Copy-Item "$env:TEMP\mfr.bak" $e -Force
 ```
 
-Schleife bis zum Erfolg: `scripts/rebase-workaround.ps1`.
+Bei Bedarf in einer Schleife wiederholen, bis der Start gelingt — etwa jede dritte Ziehung ist schlecht.
 
 **Hält nur bis zum nächsten Neustart.**
 
@@ -166,4 +166,4 @@ gesetzt, bei gleichzeitig `withGlobalTauri: true`. Prüfen, ob das Frontend dami
 Messskripte der Analyse (Session-Scratchpad, nicht dauerhaft):
 `abtest.ps1`, `nametest.ps1`, `ratetest.ps1`, `pathtest.ps1`, `basetest.ps1`, `versiontest.ps1`, `fix.ps1`
 
-Dauerhaft übernommen: `scripts/rebase-workaround.ps1`
+Die Verifikation des Fixes steht in [`verification_1.0.8.md`](verification_1.0.8.md).
