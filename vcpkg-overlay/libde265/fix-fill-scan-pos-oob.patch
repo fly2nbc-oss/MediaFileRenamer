@@ -1,25 +1,68 @@
 diff --git a/libde265/scan.cc b/libde265/scan.cc
 --- a/libde265/scan.cc
 +++ b/libde265/scan.cc
-@@ -20,6 +20,13 @@
+@@ -20,6 +20,15 @@
  
  #include "scan.h"
  
++#include <stdio.h>
++
 +#if defined(_MSC_VER)
-+/* MSVC /O2 can miscompile fill_scan_pos so the coordinate search never
-+   matches. lastSubBlock then decrements without a floor and the signed
-+   index walks off the scan tables - an ASLR-dependent ACCESS_VIOLATION. */
-+#pragma optimize("", off)
++/* Declared here rather than pulling <windows.h> into this file. The signature
++   matches the kernel32 export, so it stays compatible if some other header
++   does include windows.h. */
++extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char*);
 +#endif
 +
  static position scan0 = { 0,0 };
  static position scan_h_1[ 2* 2], scan_v_1[ 2* 2], scan_d_1[ 2* 2];
  static position scan_h_2[ 4* 4], scan_v_2[ 4* 4], scan_d_2[ 4* 4];
-@@ -121,6 +128,12 @@
+@@ -105,7 +114,21 @@ scan_position get_scan_position(int x,int y, int scanIdx, int log2BlkSize)
+   return scanpos[scanIdx][log2BlkSize][ y*(1<<log2BlkSize) + x ];
+ }
+ 
+-static void fill_scan_pos(scan_position* pos, int x,int y,int scanIdx, int log2TrafoSize)
++#if defined(_MSC_VER)
++/* MSVC /O2 is suspected of miscompiling fill_scan_pos so that the coordinate
++   search never matches. lastSubBlock then decrements without a floor and the
++   signed index walks backwards out of the scan tables - an ASLR-dependent
++   ACCESS_VIOLATION on Windows. Scoped to this one function; noinline is
++   required because MSVC otherwise inlines it into the optimized
++   init_scan_orders and the pragma would have no effect. */
++#pragma optimize("", off)
++#define DE265_SCAN_NOINLINE __declspec(noinline)
++#else
++#define DE265_SCAN_NOINLINE
++#endif
++
++static DE265_SCAN_NOINLINE
++void fill_scan_pos(scan_position* pos, int x,int y,int scanIdx, int log2TrafoSize)
+ {
+   int lastScanPos = 16;
+   int lastSubBlock = (1<<(log2TrafoSize-2)) * (1<<(log2TrafoSize-2)) -1;
+@@ -121,6 +144,30 @@ static void fill_scan_pos(scan_position* pos, int x,int y,int scanIdx, int log2T
      }
      lastScanPos--;
  
 +    if (lastSubBlock < 0 || ScanOrderSub == 0 || ScanOrderPos == 0) {
++      /* Unreachable with correctly filled scan tables: they cover every (x,y)
++         the caller asks for, so the search always terminates. Stop instead of
++         reading out of bounds. The scan position written below is WRONG, so
++         decoded images are unreliable - report it once. */
++      static int reported = 0;
++      if (!reported) {
++        char msg[192];
++        reported = 1;
++        snprintf(msg, sizeof(msg),
++                 "libde265: fill_scan_pos overran the scan tables "
++                 "(scanIdx=%d log2TrafoSize=%d x=%d y=%d); decoded output is unreliable\n",
++                 scanIdx, log2TrafoSize, x, y);
++        fputs(msg, stderr);
++#if defined(_MSC_VER)
++        OutputDebugStringA(msg);
++#endif
++      }
++
 +      pos->subBlock = 0;
 +      pos->scanPos = 0;
 +      return;
@@ -28,3 +71,15 @@ diff --git a/libde265/scan.cc b/libde265/scan.cc
      position S = ScanOrderSub[lastSubBlock];
      xC = (S.x<<2) + ScanOrderPos[lastScanPos].x;
      yC = (S.y<<2) + ScanOrderPos[lastScanPos].y;
+@@ -131,6 +178,11 @@ static void fill_scan_pos(scan_position* pos, int x,int y,int scanIdx, int log2T
+   pos->scanPos  = lastScanPos;
+ }
+ 
++#if defined(_MSC_VER)
++#pragma optimize("", on)
++#endif
++#undef DE265_SCAN_NOINLINE
++
+ 
+ void init_scan_orders()
+ {
