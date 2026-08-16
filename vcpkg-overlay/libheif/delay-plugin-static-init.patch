@@ -1,0 +1,27 @@
+diff --git a/libheif/plugin_registry.cc b/libheif/plugin_registry.cc
+--- a/libheif/plugin_registry.cc
++++ b/libheif/plugin_registry.cc
+@@ -140,7 +140,10 @@
+ public:
+   Register_Default_Plugins()
+   {
+-    register_default_plugins();
++    // Intentionally empty: registering codecs here runs C++ static
++    // constructors (libde265 de265_init / fill_scan_pos) before main().
++    // On Windows/MSVC that path is an ASLR-dependent ACCESS_VIOLATION.
++    // Plugins are registered from heif_init() instead.
+   }
+ } dummy;
+ 
+diff --git a/libheif/init.cc b/libheif/init.cc
+--- a/libheif/init.cc
++++ b/libheif/init.cc
+@@ -83,7 +83,7 @@
+ 
+ 
+ static int heif_library_initialization_count = 0;
+-static bool default_plugins_registered = true; // because they are implicitly registered at startup
++static bool default_plugins_registered = false; // registered from heif_init(), not static constructors
+ 
+ 
+ #if ENABLE_MULTITHREADING_SUPPORT

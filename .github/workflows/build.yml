@@ -41,7 +41,9 @@ jobs:
           vcpkgGitCommitId: "e0edebd1dc2d03cf7d02349df91de74ef4d0c00e"
 
       - name: Install libheif via vcpkg
-        run: vcpkg install libheif:x64-windows-static-md
+        run: vcpkg install "libheif[core]:x64-windows-static-md" --overlay-ports="${{ github.workspace }}/vcpkg-overlay"
+        env:
+          VCPKG_OVERLAY_PORTS: ${{ github.workspace }}/vcpkg-overlay
 
       - name: Install dependencies
         run: npm ci
@@ -50,6 +52,7 @@ jobs:
         run: npm run tauri build
         env:
           CI: "true"
+          VCPKG_OVERLAY_PORTS: ${{ github.workspace }}/vcpkg-overlay
 
       - name: Upload Windows EXE (standalone, no installer)
         uses: actions/upload-artifact@v6

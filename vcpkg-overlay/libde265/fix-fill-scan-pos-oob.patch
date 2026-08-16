@@ -1,0 +1,30 @@
+diff --git a/libde265/scan.cc b/libde265/scan.cc
+--- a/libde265/scan.cc
++++ b/libde265/scan.cc
+@@ -20,6 +20,13 @@
+ 
+ #include "scan.h"
+ 
++#if defined(_MSC_VER)
++/* MSVC /O2 can miscompile fill_scan_pos so the coordinate search never
++   matches. lastSubBlock then decrements without a floor and the signed
++   index walks off the scan tables - an ASLR-dependent ACCESS_VIOLATION. */
++#pragma optimize("", off)
++#endif
++
+ static position scan0 = { 0,0 };
+ static position scan_h_1[ 2* 2], scan_v_1[ 2* 2], scan_d_1[ 2* 2];
+ static position scan_h_2[ 4* 4], scan_v_2[ 4* 4], scan_d_2[ 4* 4];
+@@ -121,6 +128,12 @@
+     }
+     lastScanPos--;
+ 
++    if (lastSubBlock < 0 || ScanOrderSub == 0 || ScanOrderPos == 0) {
++      pos->subBlock = 0;
++      pos->scanPos = 0;
++      return;
++    }
++
+     position S = ScanOrderSub[lastSubBlock];
+     xC = (S.x<<2) + ScanOrderPos[lastScanPos].x;
+     yC = (S.y<<2) + ScanOrderPos[lastScanPos].y;

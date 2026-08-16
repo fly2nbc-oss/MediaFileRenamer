@@ -112,7 +112,11 @@ sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libappindicator3-dev 
 - **libheif ≥ 1.17 development package** is required to build from source (`libheif-dev` on Debian/Ubuntu, `libheif` on Arch/Manjaro; Windows via vcpkg). Runtime availability depends on your bundle/target environment.
   - **Arch / Manjaro:** `sudo pacman -S libheif`
   - **Debian / Ubuntu:** `sudo apt install libheif-dev`
-  - **Windows:** install via [vcpkg](https://vcpkg.io/) — `vcpkg install libheif` (or use `cargo vcpkg build`)
+  - **Windows:** install via [vcpkg](https://vcpkg.io/) with the repo overlay (skips unused x265 and applies the startup-crash patches):
+    ```bash
+    vcpkg install "libheif[core]:x64-windows-static-md" --overlay-ports=vcpkg-overlay
+    ```
+    Set `VCPKG_OVERLAY_PORTS` to `vcpkg-overlay` for the subsequent `npm run tauri:build`.
 
 **Optional (runtime):**
 
