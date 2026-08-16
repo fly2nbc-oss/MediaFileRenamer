@@ -2,13 +2,17 @@
 
 All notable changes to this project are documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versioning follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.0.8] - 2026-08-16
 
 ### Fixed
 
-- Stop the Windows startup access violation caused by libheif registering libde265 during C++ static initialization (ASLR-dependent crash at `fill_scan_pos` before the window is created). Plugins now initialize on first HEIC use; libde265 scan-table setup is guarded under MSVC.
+- Stop the Windows startup access violation caused by libheif registering libde265 during C++ static initialization (ASLR-dependent crash at `fill_scan_pos` before the window is created). Plugins now initialize on first HEIC use; libde265 scan-table setup is guarded under MSVC, and the guard reports to stderr and `OutputDebugString` if it ever triggers.
 
-[Unreleased]: https://github.com/fly2nbc-oss/MediaFileRenamer/compare/v1.0.7...HEAD
+### Changed
+
+- Windows builds no longer link the x265 HEVC encoder. The app only decodes HEIC, so the encoder was unused; this also removes a GPL-2.0-or-later component from the bundle.
+
+[1.0.8]: https://github.com/fly2nbc-oss/MediaFileRenamer/compare/v1.0.7...v1.0.8
 
 ## [1.0.7] - 2026-08-04
 
